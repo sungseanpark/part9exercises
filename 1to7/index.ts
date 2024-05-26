@@ -20,7 +20,7 @@ app.get('/bmi', (req, res) => {
         height,
         bmi
     });
-})
+});
 
 const PORT = 3003;
 

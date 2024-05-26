@@ -16,7 +16,7 @@ const parseExerciseArguments = (args: string[]): { target: number, hours: number
         throw new Error('Provided values were not numbers!');
     }
     return { target, hours };
-}
+};
 
 const calculateExercises = (hours: number[], target: number): Result => {
     const periodLength = hours.length;
@@ -51,13 +51,13 @@ const calculateExercises = (hours: number[], target: number): Result => {
         target,
         average
     };
-}
+};
 
 try {
     const { target, hours } = parseExerciseArguments(process.argv);
     console.log(calculateExercises(hours, target));
 } catch (error: unknown) {
-    let errorMessage = 'Something bad happened.'
+    let errorMessage = 'Something bad happened.';
     if (error instanceof Error) {
       errorMessage += ' Error: ' + error.message;
     }
