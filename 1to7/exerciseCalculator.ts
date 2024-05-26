@@ -1,4 +1,4 @@
-interface Result {
+export interface Result {
     periodLength: number;
     trainingDays: number;
     success: boolean;
@@ -7,6 +7,7 @@ interface Result {
     target: number;
     average: number;
 }
+
 
 const parseExerciseArguments = (args: string[]): { target: number, hours: number[] } => {
     if (args.length < 4) throw new Error('Not enough arguments');
@@ -18,7 +19,7 @@ const parseExerciseArguments = (args: string[]): { target: number, hours: number
     return { target, hours };
 };
 
-const calculateExercises = (hours: number[], target: number): Result => {
+export const calculateExercises = (hours: number[], target: number): Result => {
     const periodLength = hours.length;
     let trainingDays = 0;
     for (let i = 0; i < hours.length; i++) {
