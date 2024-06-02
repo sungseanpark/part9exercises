@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { NonSensitiveDiaryEntry } from "./types";
-import { getAllDiaryEntries } from './diaryService';
+import { NonSensitiveDiaryEntry, NewDiaryEntry, Visibility, Weather } from "./types";
+import { getAllDiaryEntries, createDiaryEntry } from './diaryService';
 
 interface DiaryEntryProps {
   diaryEntries: NonSensitiveDiaryEntry[];
@@ -30,7 +30,10 @@ const DiaryEntry = ( {diaryEntry}: { diaryEntry: NonSensitiveDiaryEntry } )=> (
 
 const App = () => {
   const [diaryEntries, setDiaryEntries] = useState<NonSensitiveDiaryEntry[]>([]);
-  // const [newNote, setNewNote] = useState('');
+  const [newDate, setNewDate] = useState('');
+  const [newVisibility, setNewVisibility] = useState('');
+  const [newWeather, setNewWeather] = useState('');
+  const [newComment, setNewComment] = useState('');
 
   useEffect(() => {
     getAllDiaryEntries().then(data => {
@@ -38,24 +41,45 @@ const App = () => {
     })
   }, [])
 
-  // const noteCreation = (event: React.SyntheticEvent) => {
-  //   event.preventDefault()
-  //   createNote({ content: newNote }).then(data => {
-  //     setNotes(notes.concat(data))
-  //   })
+  const diaryEntryCreation = (event: React.SyntheticEvent) => {
+    event.preventDefault()
+    createDiaryEntry(
+      { date: newDate,
+        visibility: newVisibility as Visibility,
+        weather: newWeather as Weather,
+        comment: newComment,
+       }).then(data => {
+      setDiaryEntries(diaryEntries.concat(data))
+    })
 
-  //   setNewNote('')
-  // };
+    setNewDate('');
+    setNewVisibility('');
+    setNewWeather('');
+    setNewComment('');
+  };
 
   return (
     <div>
-      {/* <form onSubmit={noteCreation}>
-        <input
-          value={newNote}
-          onChange={(event) => setNewNote(event.target.value)} 
-        />
+      <h1>Add new entry</h1>
+      <form onSubmit={diaryEntryCreation}>
+        date<input
+          value={newDate}
+          onChange={(event) => setNewDate(event.target.value)} 
+        /> <br />
+        visibility<input
+          value={newVisibility}
+          onChange={(event) => setNewVisibility(event.target.value)}
+        /> <br />
+        weather<input
+          value={newWeather}
+          onChange={(event) => setNewWeather(event.target.value)}
+        /> <br />
+        comment<input
+          value={newComment}
+          onChange={(event) => setNewComment(event.target.value)}
+        /> <br />
         <button type='submit'>add</button>
-      </form> */}
+      </form>
       <DiaryEntries diaryEntries={diaryEntries} />
     </div>
   )
