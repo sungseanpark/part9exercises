@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { NonSensitiveDiaryEntry, NewDiaryEntry, Visibility, Weather } from "./types";
+import axios from "axios";
+import { NonSensitiveDiaryEntry, Visibility, Weather } from "./types";
 import { getAllDiaryEntries, createDiaryEntry } from './diaryService';
 
 interface DiaryEntryProps {
@@ -34,6 +35,7 @@ const App = () => {
   const [newVisibility, setNewVisibility] = useState('');
   const [newWeather, setNewWeather] = useState('');
   const [newComment, setNewComment] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     getAllDiaryEntries().then(data => {
@@ -48,19 +50,28 @@ const App = () => {
         visibility: newVisibility as Visibility,
         weather: newWeather as Weather,
         comment: newComment,
-       }).then(data => {
-      setDiaryEntries(diaryEntries.concat(data))
-    })
-
-    setNewDate('');
-    setNewVisibility('');
-    setNewWeather('');
-    setNewComment('');
-  };
+      }).then(data => {
+        setDiaryEntries(diaryEntries.concat(data))
+        setNewDate('');
+        setNewVisibility('');
+        setNewWeather('');
+        setNewComment('');
+      }).catch(error => {
+        if (axios.isAxiosError(error)){
+          if (error.response){
+            setErrorMessage(error.response.data);
+            setTimeout(() => {
+              setErrorMessage('');
+            }, 5000);
+          }
+        }
+      });
+};
 
   return (
     <div>
       <h1>Add new entry</h1>
+      <p style={{ color: 'red' }}>{errorMessage}</p>
       <form onSubmit={diaryEntryCreation}>
         date<input
           value={newDate}
