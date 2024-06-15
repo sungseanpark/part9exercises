@@ -30,6 +30,19 @@ const PatientPage = () => {
             <h2>{patient.name} <MaleIcon></MaleIcon></h2>
             <div>ssn: {patient.ssn}</div>
             <div>occupation: {patient.occupation}</div>
+            <h3>entries</h3>
+            <ul>
+                {patient.entries.map(entry => (
+                    <li key={entry.id}>
+                        {entry.date} <i>{entry.description}</i>
+                        <ul>
+                            {entry.diagnosisCodes?.map(code => (
+                                <li key={code}>{code}</li>
+                            ))}
+                        </ul>
+                    </li>
+                ))}
+            </ul>
             </div>
         );
     }
@@ -39,6 +52,19 @@ const PatientPage = () => {
             <h2>{patient.name} <FemaleIcon></FemaleIcon></h2>
             <div>ssn: {patient.ssn}</div>
             <div>occupation: {patient.occupation}</div>
+            <h3>entries</h3>
+            <ul>
+                {patient.entries.map(entry => (
+                    <li key={entry.id}>
+                        {entry.date} <i>{entry.description}</i>
+                        <ul>
+                            {entry.diagnosisCodes?.map(code => (
+                                <li key={code}>{code}</li>
+                            ))}
+                        </ul>
+                    </li>
+                ))}
+            </ul>
             </div>
         );
     }
@@ -48,6 +74,19 @@ const PatientPage = () => {
             <h2>{patient.name}</h2>
             <div>ssn: {patient.ssn}</div>
             <div>occupation: {patient.occupation}</div>
+            <h3>entries</h3>
+            <ul>
+                {patient.entries.map(entry => (
+                    <li key={entry.id}>
+                        {entry.date} <i>{entry.description}</i>
+                        <ul>
+                            {entry.diagnosisCodes?.map(code => (
+                                <li key={code}>{code}</li>
+                            ))}
+                        </ul>
+                    </li>
+                ))}
+            </ul>
             </div>
         );
     }
