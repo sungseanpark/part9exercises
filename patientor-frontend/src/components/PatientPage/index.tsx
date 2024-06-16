@@ -5,11 +5,12 @@ import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import List from '@mui/material/List';
+import AddHealthCheckEntryForm from './AddHealthCheckEntryForm';
 
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from "react";
 
-import {  Patient, Diagnose, BaseEntry, Entry, HospitalEntry, OccupationalHealthcareEntry, HealthCheckEntry, HealthCheckRating } from "../../types";
+import {  Patient, Diagnosis, BaseEntry, Entry, HospitalEntry, OccupationalHealthcareEntry, HealthCheckEntry, HealthCheckRating } from "../../types";
 
 import patientService from "../../services/patients";
 import diagnosesService from "../../services/diagnoses";
@@ -17,7 +18,7 @@ import diagnosesService from "../../services/diagnoses";
 const PatientPage = () => {
     const { id } = useParams<{ id: string }>() as { id: string };
     const [patient, setPatient] = useState<Patient | null>(null);
-    const [diagnoses, setDiagnoses] = useState<Diagnose[]>([]);
+    const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([]);
     
     useEffect(() => {
         const fetchPatient = async () => {
@@ -120,6 +121,7 @@ const PatientPage = () => {
             <h2>{patient.name} {genderIcon({patient})}</h2>
             <div>ssn: {patient.ssn}</div>
             <div>occupation: {patient.occupation}</div>
+            <AddHealthCheckEntryForm onCancel={console.log} onSubmit={patientService.createEntry} patientId={patient.id}></AddHealthCheckEntryForm>
             <h3>entries</h3>
             <ul>
                 {patient.entries.map(entry => (

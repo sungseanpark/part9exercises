@@ -1,4 +1,4 @@
-export interface Diagnose {
+export interface Diagnosis {
   code: string;
   name: string;
   latin?: string;
@@ -25,7 +25,7 @@ export interface BaseEntry {
   description: string;
   date: string;
   specialist: string;
-  diagnosisCodes?: Array<Diagnose['code']>;
+  diagnosisCodes?: Array<Diagnosis['code']>;
 }
 
 export enum HealthCheckRating {
@@ -65,3 +65,8 @@ export type Entry =
 | HealthCheckEntry;
 
 export type PatientFormValues = Omit<Patient, "id" | "entries">;
+
+// Define special omit for unions
+export type UnionOmit<T, K extends string | number | symbol> = T extends unknown ? Omit<T, K> : never;
+// Define Entry without the 'id' property
+export type EntryWithoutId = UnionOmit<Entry, 'id'>;
